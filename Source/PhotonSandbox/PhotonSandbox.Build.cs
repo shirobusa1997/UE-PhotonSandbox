@@ -1,5 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+using System;
+using System.IO;
 using UnrealBuildTool;
 
 public class PhotonSandbox : ModuleRules
@@ -61,28 +63,28 @@ public class PhotonSandbox : ModuleRules
 	{
 		if ((Target.Platform == UnrealTargetPlatform.Win64) || (Target.Platform == UnrealTargetPlatform.Win32))
 		{
-			Definitions.Add("_EG_WINDOWS_PLATFORM");
+			PublicDefinitions.Add("_EG_WINDOWS_PLATFORM");
 			AddPhotonLibPathWin(Target, "Common");
 			AddPhotonLibPathWin(Target, "Photon");
 			AddPhotonLibPathWin(Target, "LoadBalancing");
 		}
 		else if (Target.Platform == UnrealTargetPlatform.Android)
 		{
-			Definitions.Add("_EG_ANDROID_PLATFORM");
+			PublicDefinitions.Add("_EG_ANDROID_PLATFORM");
 			AddPhotonLibPathAndroid(Target, "common");
 			AddPhotonLibPathAndroid(Target, "photon");
 			AddPhotonLibPathAndroid(Target, "loadbalancing");
 		}
 		else if (Target.Platform == UnrealTargetPlatform.IOS)
 		{
-			Definitions.Add("_EG_IPHONE_PLATFORM");
+			PublicDefinitions.Add("_EG_IPHONE_PLATFORM");
 			AddPhotonLibPathIOS(Target, "Common");
 			AddPhotonLibPathIOS(Target, "Photon");
 			AddPhotonLibPathIOS(Target, "LoadBalancing");
 		}
 		else if (Target.Platform == UnrealTargetPlatform.Mac)
 		{
-			Definitions.Add("_EG_IMAC_PLATFORM");
+			PublicDefinitions.Add("_EG_IMAC_PLATFORM");
 			AddPhotonLibPathMac(Target, "Common");
 			AddPhotonLibPathMac(Target, "Photon");
 			AddPhotonLibPathMac(Target, "LoadBalancing");
