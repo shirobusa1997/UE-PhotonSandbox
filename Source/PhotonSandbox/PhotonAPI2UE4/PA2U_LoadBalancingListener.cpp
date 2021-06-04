@@ -65,7 +65,7 @@ PA2U_LoadBalancingListener::PA2U_LoadBalancingListener(PA2U_BaseView* pView) : m
 
 PA2U_LoadBalancingListener::~PA2U_LoadBalancingListener() { delete mpView; }
 
-void PA2U_LoadBalancingListener::setLoadBalancingClient(ExitGames::LoadBalancing::Client* pLBC)
+void PA2U_LoadBalancingListener::setLoadBalancingClient(ExitGames::LoadBalancing::Clienlt* pLBC)
 {
     this->mpLBC = pLBC;
     return;
@@ -77,3 +77,65 @@ void PA2U_LoadBalancingListener::connect(const JString& userName)
     return;
 }
 
+void PA2U_LoadBalancingListener::debugReturn(int debugLevel, const JString& string)
+{
+	Console::get().debugReturn(debugLevel, string);
+}
+
+void PA2U_LoadBalancingListener::connectionErrorReturn(int errorCode)
+{
+	Console::get().writeLine(JString(L"connection failed with error ") + errorCode);
+
+	updateState();
+}
+
+void PA2U_LoadBalancingListener::clientErrorReturn(int errorCode)
+{
+	Console::get().writeLine(JString(L"received error ") + errorCode + L" from client");
+
+	updateState();
+}
+
+void PA2U_LoadBalancingListener::warningReturn(int warningCode)
+{
+	Console::get().writeLine(JString(L"received warning ") + warningCode + " from client");
+}
+
+void PA2U_LoadBalancingListener::serverErrorReturn(int errorCode)
+{
+	Console::get().writeLine(JString(L"received error ") + errorCode + " from server");
+
+	updateState();
+}
+
+void PA2U_LoadBalancingListener::joinRoomEventAction(int playerNr, const JVector<int>& playernrs, const Player& player)
+{
+	// デバッグ出力
+	Console::get().writeLine(JString("player ") + playerNr + L" " + player.getName() + L" has joined the game.");
+
+	mpView->addPlayer(playerNr, player.getName(), player.getNumber() == mpLBC->getLocalPlayer().getNumber());
+}
+
+void PA2U_LoadBalancingListener::leaveRoomEventAction(int playerNr, bool isInactive)
+{
+	if(isInactive)
+		Console::get().writeLine(JString(L"player ") + playerNr + L" has suspended the game");
+	else
+	{
+		Console::get().writeLine(JString(L"player ") + playerNr + L" has abandoned the game");
+
+		mpView->removePlayer(playerNr);
+	}
+}
+
+void PA2U_LoadBalancingListener::customEventAction(int playerNr, nByte eventCode, const Object& eventContentObj)
+{
+	ExitGames::Common::Hashtable eventContent = ExitGames::Common::ValueObject<ExitGames::Common::Hashtable>(eventContentObj).getDataCopy();
+
+	// イベントコードによる処理分岐
+	// 2 : プレイヤーの位置移動
+	if (eventCode == 2)
+	{	
+		
+	}
+}
