@@ -9,7 +9,7 @@ class PA2U_BaseView
         virtual void initPlayers(void);
         virtual void addPlayer(int playerNumber, const ExitGames::Common::JString& playerName, bool isLocal);
         virtual void removePlayer(int playerNumber);
-        virtual void changePlayerTransform(int playerNumber, float Pos_x, float Pos_y, float Pos_z);
+        virtual void changePlayerTransform(int playerNumber, double Pos_x, double Pos_y, double Pos_z);
         virtual void setupScene();
         virtual void updateRoomList(const ExitGames::Common::JVector<ExitGames::Common::JString>& roomNames);
 };

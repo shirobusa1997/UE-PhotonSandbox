@@ -6,12 +6,12 @@
 struct LocalPlayerBase
 {
     LocalPlayerBase();
-    float x;
-    float y;
-    float z;
+    double x;
+    double y;
+    double z;
 };
 
-class PA2U_LoadBalancingListener : public ExitGames::LoadBalancing::PA2U_LoadBalancingListener
+class PA2U_LoadBalancingListener : public ExitGames::LoadBalancing::LoadBalancingListener
 {
     public:
         PA2U_LoadBalancingListener(PA2U_BaseView *pView){}
@@ -21,7 +21,7 @@ class PA2U_LoadBalancingListener : public ExitGames::LoadBalancing::PA2U_LoadBal
         void connect(const ExitGames::Common::JString& userName);
         void service();
         void createRoom();
-        bool setLocalPlayerTransform(float x, float y, float z);
+        bool setLocalPlayerTransform(double x, double y, double z);
         void moveLocalPlayerTransform();
 
     private:
@@ -70,4 +70,5 @@ class PA2U_LoadBalancingListener : public ExitGames::LoadBalancing::PA2U_LoadBal
         ExitGames::Common::JString        mMap;
         
         int  mLocalPlayerNumber;
+        int  mGridSize;
 };
